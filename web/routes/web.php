@@ -18,6 +18,9 @@ use Shopify\Exception\InvalidWebhookException;
 use Shopify\Utils;
 use Shopify\Webhooks\Registry;
 use Shopify\Webhooks\Topics;
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +36,14 @@ use Shopify\Webhooks\Topics;
 |
 */
 
+Route::get('test',function(){
+    return view('order');
+});
+Route::get('email',function(){
+    Mail::to('hyoyo47382@gmail.com')->send(new OrderShipped());
+
+    return view('email');
+});
 Route::fallback(function (Request $request) {
     if (Context::$IS_EMBEDDED_APP &&  $request->query("embedded", false) === "1") {
         if (env('APP_ENV') === 'production') {
@@ -65,6 +76,7 @@ Route::get('/api/auth/callback', function (Request $request) {
     $shop = Utils::sanitizeShopDomain($request->query('shop'));
 
     $response = Registry::register('/api/webhooks', Topics::APP_UNINSTALLED, $shop, $session->getAccessToken());
+    $order = Registry::register('/api/webhooks', Topics::ORDERS_CREATE, $shop, $session->getAccessToken());
     if ($response->isSuccess()) {
         Log::debug("Registered APP_UNINSTALLED webhook for shop $shop");
     } else {
@@ -73,7 +85,14 @@ Route::get('/api/auth/callback', function (Request $request) {
                 print_r($response->getBody(), true)
         );
     }
-
+    if ($order->isSuccess()) {
+        Log::debug("Registered Order webhook for shop $shop");
+    } else {
+        Log::error(
+            "Failed to register Order webhook for shop $shop with order body: " .
+                print_r($order->getBody(), true)
+        );
+    }
     $redirectUrl = Utils::getEmbeddedAppUrl($host);
     if (Config::get('shopify.billing.required')) {
         list($hasPayment, $confirmationUrl) = EnsureBilling::check($session, Config::get('shopify.billing'));
@@ -143,3 +162,4 @@ Route::post('/api/webhooks', function (Request $request) {
         return response()->json(['message' => "Got an exception when handling '$topic' webhook"], 500);
     }
 });
+

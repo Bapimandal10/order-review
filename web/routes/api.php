@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Setting;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return "Hello API";
 });
+
+Route::POST('setting-save', [Setting::class, 'store']);
+Route::post('/review-submit',function(Request $request){
+    dd($request->all());
+})->name('review.submit');

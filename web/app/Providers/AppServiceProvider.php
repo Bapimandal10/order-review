@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Lib\DbSessionStorage;
 use App\Lib\Handlers\AppUninstalled;
+use App\Lib\Handlers\OrderCreated;
 use App\Lib\Handlers\Privacy\CustomersDataRequest;
 use App\Lib\Handlers\Privacy\CustomersRedact;
 use App\Lib\Handlers\Privacy\ShopRedact;
@@ -56,7 +57,8 @@ class AppServiceProvider extends ServiceProvider
         URL::forceScheme('https');
 
         Registry::addHandler(Topics::APP_UNINSTALLED, new AppUninstalled());
-
+        Registry::addHandler(Topics::ORDERS_CREATE, new AppUninstalled());
+        
         /*
          * This sets up the mandatory privacy webhooks. You’ll need to fill in the endpoint to be used by your app in
          * the “Privacy webhooks” section in the “App setup” tab, and customize the code when you store customer data
