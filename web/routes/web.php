@@ -18,8 +18,7 @@ use Shopify\Exception\InvalidWebhookException;
 use Shopify\Utils;
 use Shopify\Webhooks\Registry;
 use Shopify\Webhooks\Topics;
-use App\Mail\OrderShipped;
-use Illuminate\Support\Facades\Mail;
+
 
 
 /*
@@ -36,14 +35,7 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-Route::get('test',function(){
-    return view('order');
-});
-Route::get('email',function(){
-    Mail::to('hyoyo47382@gmail.com')->send(new OrderShipped());
-
-    return view('email');
-});
+   
 Route::fallback(function (Request $request) {
     if (Context::$IS_EMBEDDED_APP &&  $request->query("embedded", false) === "1") {
         if (env('APP_ENV') === 'production') {

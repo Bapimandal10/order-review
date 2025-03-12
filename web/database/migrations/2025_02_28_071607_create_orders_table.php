@@ -17,8 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->bigInteger('order_id');
             $table->bigInteger('customer_id')->nullable();
-            $table->boolean('review_type')->default(false);
-            $table->string('review');
+            $table->boolean('review_type')->default(0);
+            $table->string('review')->nullable();
             $table->timestamps();
         });
     }

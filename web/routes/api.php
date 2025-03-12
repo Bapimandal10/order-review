@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Setting;
-
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +22,6 @@ Route::get('/', function () {
 });
 
 Route::POST('setting-save', [Setting::class, 'store']);
-Route::post('/review-submit',function(Request $request){
-    dd($request->all());
-})->name('review.submit');
+Route::get('test/{order_id}',[OrderController::class, 'get_order'])->name('order');
+Route::post('/review-submit',[OrderController::class, 'review_submit'])->name('review.submit');
+

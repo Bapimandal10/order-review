@@ -57,7 +57,7 @@ class AppServiceProvider extends ServiceProvider
         URL::forceScheme('https');
 
         Registry::addHandler(Topics::APP_UNINSTALLED, new AppUninstalled());
-        Registry::addHandler(Topics::ORDERS_CREATE, new AppUninstalled());
+        Registry::addHandler(Topics::ORDERS_CREATE, new OrderCreated());
         
         /*
          * This sets up the mandatory privacy webhooks. You’ll need to fill in the endpoint to be used by your app in

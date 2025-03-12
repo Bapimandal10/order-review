@@ -136,6 +136,7 @@
         }
     </style>
 </head>
+{{-- {{ dd($order) }} --}}
 
 <body>
     <div class="email-container">
@@ -149,13 +150,16 @@
             <div class="email-content">
                 <img src="https://img.icons8.com/color/96/000000/checked--v1.png" alt="Order Completed Icon">
                 <h2>Your Order Has Been Completed!</h2>
-                <p>Hi <strong>BAPI MANDAL</strong>, order <strong>#[Order Number]</strong></p>
+                <p>Hi <strong>{{ $order['customer']['first_name'] }} {{ $order['customer']['last_name'] }}</strong>,
+                    order
+                    <strong>{{ $order['name'] }}</strong>
+                </p>
                 <p class="para"> Thank you for shopping with us! Your order has been successfully processed and
                     completed.
                     We hope you
                     enjoy your purchase.</p>
                 <div>
-                    <a href="#" class="email-button">View Order Details</a>
+                    <a href=" {{ route('order', $order['id']) }}" class="email-button">View Order Details</a>
 
                 </div>
             </div>
