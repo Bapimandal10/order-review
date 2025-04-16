@@ -18,6 +18,8 @@ use Shopify\Exception\InvalidWebhookException;
 use Shopify\Utils;
 use Shopify\Webhooks\Registry;
 use Shopify\Webhooks\Topics;
+use App\Http\Controllers\OrderController;
+
 
 
 
@@ -155,3 +157,4 @@ Route::post('/api/webhooks', function (Request $request) {
     }
 });
 
+Route::get('order-review/{order_id}',[OrderController::class, 'get_order'])->name('order');

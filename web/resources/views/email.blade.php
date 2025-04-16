@@ -64,7 +64,7 @@
             border-bottom-left-radius: 8px;
             margin: 40px 0 0px 0;
             padding: 10px 0px;
-            line-height: 5px;
+            line-height: 15px;
         }
 
         .email-button {
@@ -138,37 +138,36 @@
 </head>
 {{-- {{ dd($order) }} --}}
 
+{{-- {{ dd($setting) }} --}}
+
 <body>
     <div class="email-container">
         <div class="email">
             <!-- Header -->
             <div class="email-header">
-                <h1>Order Completed</h1>
+                <h1>{{ $setting->subject }}</h1>
             </div>
 
             <!-- Content -->
             <div class="email-content">
                 <img src="https://img.icons8.com/color/96/000000/checked--v1.png" alt="Order Completed Icon">
-                <h2>Your Order Has Been Completed!</h2>
+                <h2>{{ $setting->title }}</h2>
                 <p>Hi <strong>{{ $order['customer']['first_name'] }} {{ $order['customer']['last_name'] }}</strong>,
                     order
                     <strong>{{ $order['name'] }}</strong>
                 </p>
-                <p class="para"> Thank you for shopping with us! Your order has been successfully processed and
-                    completed.
-                    We hope you
-                    enjoy your purchase.</p>
+                <p class="para"> {{ $setting->message }}</p>
                 <div>
-                    <a href=" {{ route('order', $order['id']) }}" class="email-button">View Order Details</a>
+                    <a href=" {{ 'https://' . $setting->session_id . '/apps/order-review/' . $order['id'] }}"
+                        class="email-button">{{ $setting->text }}</a>
 
                 </div>
             </div>
 
             <!-- Footer -->
             <div class="email-footer">
-                <p>If you have any questions, feel free to <a href="#">contact our support
-                        team</a>.</p>
-                <p class="copy">&copy; 2023 Your Company. All rights reserved.</p>
+                {{-- <p>{{  }}</p> --}}
+                {!! $setting->support !!}
 
             </div>
         </div>

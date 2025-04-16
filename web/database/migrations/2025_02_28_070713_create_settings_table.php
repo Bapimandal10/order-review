@@ -15,12 +15,16 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->string('session_id');
             $table->string('subject');
+            $table->string('title');
             $table->string('message');
-            $table->bigInteger('number_of_time');
-            $table->bigInteger('send_after_days');
+            $table->string('text');
+            $table->string('support');
+            $table->integer('number_of_time');
+            $table->integer('send_after_days');
             $table->boolean('on_minimum_order_amount')->default(false);
-            $table->bigInteger('order_amount')->nullable();
+            $table->bigInteger('min_order_amount')->nullable();
             $table->timestamps();
         });
     }
